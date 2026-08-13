@@ -10,3 +10,7 @@
 
 /* 评估说明的展开控件采用贴合文字的紧凑尺寸。 */
 .boundary-action{align-self:auto;min-width:0;margin:0 14px 0 0;padding:7px 9px;gap:7px}.boundary-action strong{width:25px;height:25px;font-size:18px}.boundary summary{gap:14px}
+
+/* 只读台返回入口固定为低干扰的悬浮图标。 */
+.console-preview .back-button{position:fixed;right:22px;bottom:22px;z-index:20;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #5a9da0;background:#123f49;color:#ebfffc;border-radius:6px;box-shadow:0 8px 20px rgba(5,35,43,.28);font-size:24px;line-height:1;transition:transform .18s ease,background .18s ease}.console-preview .back-button:hover,.console-preview .back-button:focus-visible{transform:translateY(-2px);background:#19606a;outline:2px solid #9bf7ef;outline-offset:2px}.console-preview .back-button::after{content:'返回项目展示';position:absolute;right:0;bottom:54px;width:max-content;padding:5px 8px;background:#08272f;color:#eafff9;font-size:12px;line-height:1.4;opacity:0;pointer-events:none;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease}.console-preview .back-button:hover::after,.console-preview .back-button:focus-visible::after{opacity:1;transform:translateY(0)}
+@media(max-width:700px){.console-preview .back-button{right:14px;bottom:14px;width:42px;height:42px}.console-preview .back-button::after{display:none}}
