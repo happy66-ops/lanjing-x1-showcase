@@ -40,3 +40,23 @@ document.addEventListener('submit', event => {
   event.preventDefault();
   readonlyNotice();
 }, true);
+
+window.addEventListener('message', event => {
+  if (event.origin !== window.location.origin || !event.data) return;
+  if (event.data.type === 'lanjing-readonly-top') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  if (event.data.type === 'lanjing-readonly-view') {
+    const tab = document.querySelector(`.tab[data-view="${event.data.view}"]`);
+    tab?.click();
+    document.getElementById(event.data.view)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+
+const requestedView = new URLSearchParams(window.location.search).get('view');
+if (requestedView && ['mission', 'boundary', 'integration'].includes(requestedView)) {
+  document.querySelectorAll('.tab,.view').forEach(element => element.classList.remove('active'));
+  document.querySelector(`.tab[data-view="${requestedView}"]`)?.classList.add('active');
+  document.getElementById(requestedView)?.classList.add('active');
+}

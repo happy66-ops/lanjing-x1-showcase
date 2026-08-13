@@ -29,10 +29,13 @@
     <section class="notice"><b>公开展示页</b><span>不提供设备控制、串口参数、动作帧或远程操作入口。</span></section>
     </section>
     <section id="console" class="mode-view console-preview" aria-label="只读作业台预览">
-      <header class="console-head"><div><p class="eyebrow">READ-ONLY WORKBENCH</p><h1>澜净 X1 作业台</h1><p>完整界面参考。按钮可查看和展开，不会下发设备命令。</p></div></header>
       <div class="console-frame"><iframe id="consoleFrame" title="澜净 X1 只读作业台" src="console/"></iframe></div>
-      <section class="local-guide"><b>本地控制模式</b><span>现场连接树莓派热点或同一局域网后，通过本地控制台登录；认证成功的一个设备获得控制租约，其他设备保持观察。公网不提供控制入口。</span></section>
-      <button class="back-button" data-open-showcase aria-label="返回项目展示" title="返回项目展示">←</button>
+      <aside class="console-float-nav" aria-label="只读作业台目录">
+        <button data-console-view="mission" title="任务演示"><b>01</b><span>任务</span></button>
+        <button data-console-view="boundary" title="工况校核"><b>02</b><span>校核</span></button>
+        <button data-console-view="integration" title="接入准备"><b>03</b><span>接入</span></button>
+        <button data-console-top title="回到作业台顶部"><b>↑</b><span>顶部</span></button>
+      </aside>
     </section>
   </main>
   <footer>澜净 X1 项目公开展示 · 仅供项目了解与竞赛展示使用</footer>
