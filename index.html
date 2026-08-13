@@ -9,27 +9,32 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main>
-    <nav aria-label="站点导航"><a class="brand" href="#top">澜净 <strong>X1</strong></a><span>供水管道清洁机器人</span><a class="nav-link" href="console/">只读作业台</a><a class="nav-link" href="#process">作业流程</a></nav>
+  <main id="siteShell">
+    <nav aria-label="站点导航"><a class="brand" href="#top">澜净 <strong>X1</strong></a><span>供水管道清洁机器人</span><div class="mode-switch" role="group" aria-label="页面模式"><button class="mode active" data-mode="showcase">项目展示</button><button class="mode" data-mode="console">只读作业台</button></div></nav>
+    <section id="showcase" class="mode-view active">
     <header id="top" class="intro">
       <p class="eyebrow">PUBLIC PROJECT DISPLAY</p>
       <h1>面向供水管道<br>沉积层扰动与冲排</h1>
       <p class="lead">澜净 X1 采用前置三爪贴合与后置履带行进组合，面向 400-500 mm 管径范围的封闭模拟验证与后续现场评估准备。</p>
       <div class="tags"><span>前膨胀三爪</span><span>前后滚刷</span><span>后置履带</span><span>人工可接管</span></div>
       <div class="hero-stage" aria-label="管道机器人二维动态示意"><div class="pipe-ring"></div><div class="flow-line one"></div><div class="flow-line two"></div><div class="robot-mark"><b>澜净 X1</b><small>前膨胀 · 后履带</small></div><div class="brush left"></div><div class="brush right"></div></div>
-      <div class="entry-grid"><a class="entry-card" href="console/"><span>PUBLIC VIEW</span><b>查看完整只读作业台</b><small>保留 M0-M3、PWM、000-007 与工况校核</small></a><div class="entry-card local"><span>LOCAL CONTROL</span><b>实际控制在树莓派本地网络</b><small>单控制者租约 + 本地授权，不通过公网开放</small></div></div>
+      <div class="entry-grid"><button class="entry-card" data-open-console><span>READ-ONLY WORKBENCH</span><b>进入完整只读作业台</b><small>查看 M0-M3、PWM、000-007 与工况校核</small></button><div class="entry-card local"><span>LOCAL CONTROL</span><b>实际控制仅在树莓派本地网络</b><small>本地授权后获取唯一控制租约</small></div></div>
     </header>
     <section id="process" class="process-section">
       <div class="section-head"><div><p class="eyebrow">WORKFLOW</p><h2>投放到冲洗的作业链</h2></div><p>二维工艺示意，不作为实拍或市政作业验证。</p></div>
       <figure class="animation"><img src="assets/lanjing-x1-process.gif" alt="澜净 X1 投放、识别、贴合、清洁、回收、冲洗的二维流程动画"><figcaption>先回收机器人，再开启阀门冲洗。机器人负责扰动并破坏沉积层附着状态，水流完成后续冲排。</figcaption></figure>
       <ol class="steps"><li><b>01</b><span>投放</span></li><li><b>02</b><span>识别</span></li><li><b>03</b><span>贴合</span></li><li><b>04</b><span>清洁</span></li><li><b>05</b><span>回收</span></li><li><b>06</b><span>冲洗</span></li></ol>
     </section>
-    <section class="boundary">
-      <article><p class="eyebrow">CURRENT BASIS</p><h2>当前项目基础</h2><ul><li>450 mm 样管已有机器人通行与演示记录。</li><li>现有链路支持云端辅助建议与人工动作组接管。</li><li>二维覆盖分析与流程动画用于竞赛表达。</li></ul></article>
-      <article class="pending"><p class="eyebrow">ENGINEERING BOUNDARY</p><h2>仍需现场核实</h2><ul><li>阀门隔离、残余压力、排水与应急回收条件。</li><li>水密、漏水、低压、过流、卡滞的实测记录。</li><li>真实摄像头、串口回读和市政准入条件。</li></ul></article>
-    </section>
+    <details class="boundary"><summary>工程验证与现场评估说明</summary><div class="boundary-grid"><article><p class="eyebrow">CURRENT BASIS</p><h2>当前项目基础</h2><ul><li>450 mm 样管已有机器人通行与演示记录。</li><li>现有链路支持云端辅助建议与人工动作组接管。</li><li>二维覆盖分析与流程动画用于竞赛表达。</li></ul></article><article><p class="eyebrow">NEXT GATE</p><h2>现场评估要点</h2><ul><li>阀门隔离、残余压力、排水与应急回收条件。</li><li>水密、漏水、低压、过流、卡滞的实测记录。</li><li>真实摄像头、串口回读和市政准入条件。</li></ul></article></div></details>
     <section class="notice"><b>公开展示页</b><span>不提供设备控制、串口参数、动作帧或远程操作入口。</span></section>
+    </section>
+    <section id="console" class="mode-view console-preview" aria-label="只读作业台预览">
+      <header class="console-head"><div><p class="eyebrow">READ-ONLY WORKBENCH</p><h1>澜净 X1 作业台</h1><p>完整界面参考。按钮可查看和展开，不会下发设备命令。</p></div><button class="back-button" data-open-showcase>返回项目展示</button></header>
+      <div class="console-frame"><iframe id="consoleFrame" title="澜净 X1 只读作业台" src="console/"></iframe></div>
+      <section class="local-guide"><b>本地控制模式</b><span>现场连接树莓派热点或同一局域网后，通过本地控制台登录；认证成功的一个设备获得控制租约，其他设备保持观察。公网不提供控制入口。</span></section>
+    </section>
   </main>
   <footer>澜净 X1 项目公开展示 · 仅供项目了解与竞赛展示使用</footer>
+  <script src="site.js"></script>
 </body>
 </html>

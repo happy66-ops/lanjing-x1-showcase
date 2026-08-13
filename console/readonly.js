@@ -1,9 +1,42 @@
-/* 公网镜像：阻止所有原控制按钮改变状态，保留完整布局供参考。 */
+/* 公网镜像：允许浏览、页签切换和维护面板展开；阻止任何改变状态、保存或导出的动作。 */
+const blockedSelectors = [
+  '[data-mode]',
+  '[data-scenario]',
+  '[data-step]',
+  '[data-single]',
+  '#dryRunCommand',
+  '#runSelfCheck',
+  '#applyStream',
+  '#disconnectStream',
+  '#saveConfig',
+  '#exportCsv',
+  '#exportJson',
+  '#clearEventLog'
+];
+
+function readonlyNotice() {
+  const note = document.getElementById('actionNote');
+  if (note) {
+    note.textContent = '公开只读参考：可切换页签、展开面板和查看参数；不连接硬件，也不执行、保存或导出演练操作。';
+  }
+}
+
 document.addEventListener('click', event => {
-  const button = event.target.closest('button, select, input');
-  if (!button || button.classList.contains('tab')) return;
+  const target = event.target.closest(blockedSelectors.join(','));
+  if (!target) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  const note = document.getElementById('actionNote');
-  if (note) note.textContent = '公开只读参考：此页面不连接硬件，也不执行演练操作。';
+  readonlyNotice();
+}, true);
+
+document.addEventListener('change', event => {
+  const target = event.target.closest('select, input');
+  if (!target) return;
+  event.preventDefault();
+  readonlyNotice();
+}, true);
+
+document.addEventListener('submit', event => {
+  event.preventDefault();
+  readonlyNotice();
 }, true);
