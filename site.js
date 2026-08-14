@@ -12,6 +12,10 @@ document.querySelector('[data-open-console]').addEventListener('click', () => ch
 document.querySelector('[data-open-showcase]')?.addEventListener('click', () => changeMode('showcase'));
 
 const consoleFrame = document.getElementById('consoleFrame');
+document.querySelectorAll('[data-open-integration]').forEach(button => button.addEventListener('click', () => {
+  changeMode('console');
+  consoleFrame.src = 'console/?view=integration';
+}));
 document.querySelectorAll('[data-console-view]').forEach(button => {
   button.addEventListener('click', () => {
     consoleFrame.src = `console/?view=${encodeURIComponent(button.dataset.consoleView)}`;
