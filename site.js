@@ -29,3 +29,11 @@ document.querySelectorAll('[data-console-view]').forEach(button => {
 document.querySelector('[data-console-top]').addEventListener('click', () => {
   consoleFrame.src = 'console/?view=mission';
 });
+
+const consoleNav = document.querySelector('.console-float-nav');
+const consoleNavToggle = document.querySelector('[data-console-nav-toggle]');
+consoleNavToggle?.addEventListener('click', () => {
+  const collapsed = consoleNav.classList.toggle('collapsed');
+  consoleNavToggle.setAttribute('aria-expanded', String(!collapsed));
+  consoleNavToggle.setAttribute('title', collapsed ? '展开目录' : '收起目录');
+});
