@@ -5,7 +5,12 @@ function changeMode(name) {
   views.forEach(view => view.classList.toggle('active', view.id === name));
   buttons.forEach(button => button.classList.toggle('active', button.dataset.mode === name));
   root.dataset.mode = name;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 模式切换后强制回到页面顶部，避免只读台的顶栏被外层滚动位置截掉。
+  requestAnimationFrame(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  });
 }
 buttons.forEach(button => button.addEventListener('click', () => changeMode(button.dataset.mode)));
 document.querySelector('[data-open-console]').addEventListener('click', () => changeMode('console'));
