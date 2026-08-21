@@ -1,6 +1,7 @@
 /* 公网镜像：允许浏览、页签切换和维护面板展开；阻止任何改变状态、保存或导出的动作。 */
 const blockedSelectors = [
   '[data-mode]',
+  '[data-direction]',
   '[data-scenario]',
   '[data-step]',
   '[data-single]',
@@ -54,9 +55,9 @@ window.addEventListener('message', event => {
   }
 });
 
-const requestedView = new URLSearchParams(window.location.search).get('view');
-if (requestedView && ['mission', 'boundary', 'integration'].includes(requestedView)) {
+const readonlyRequestedView = new URLSearchParams(window.location.search).get('view');
+if (readonlyRequestedView && ['mission', 'boundary', 'integration'].includes(readonlyRequestedView)) {
   document.querySelectorAll('.tab,.view').forEach(element => element.classList.remove('active'));
-  document.querySelector(`.tab[data-view="${requestedView}"]`)?.classList.add('active');
-  document.getElementById(requestedView)?.classList.add('active');
+  document.querySelector(`.tab[data-view="${readonlyRequestedView}"]`)?.classList.add('active');
+  document.getElementById(readonlyRequestedView)?.classList.add('active');
 }

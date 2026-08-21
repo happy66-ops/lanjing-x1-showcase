@@ -21,19 +21,18 @@
           <h1>供水管道<br>清洁作业台</h1>
           <p class="lead">将作业流程、只读工况校核和现场接入边界集中在同一入口。公开访问只展示信息；设备控制仅在现场本地完成取权后开放。</p>
           <div class="tags"><span>400-500 mm</span><span>贴合清洁</span><span>动作组</span><span>人工接管</span></div>
-          <div class="entry-grid"><button class="entry-card" data-open-console><span>作业台</span><b>查看只读控制界面</b><small>任务、工况、M0-M3、PWM 与执行器维护项</small></button><button class="entry-card local" data-open-integration><span>现场接入</span><b>查看本地控制前提</b><small>网络、登录、取权与动作组均需在现场闭环确认</small></button></div>
+          <div class="entry-grid"><button class="entry-card" data-open-console><span>作业台</span><b>查看只读控制界面</b><small>方向、动作模式、运行计时与安全停止演示</small></button><button class="entry-card local" data-open-integration><span>现场接入</span><b>查看本地控制前提</b><small>网络、登录、取权与动作组均需在现场闭环确认</small></button></div>
         </div>
-        <figure class="hero-video" aria-label="管道清洁作业流程二维示意"><video autoplay muted loop playsinline preload="metadata" aria-label="投放、识别、贴合、清洁、回收、冲洗的二维作业流程动画"><source src="assets/lanjing-x1-process-v2.mp4" type="video/mp4">当前浏览器不支持播放该动画视频。</video><figcaption><span>作业流程</span><b>投放 → 识别 → 贴合 → 清洁 → 回收 → 冲洗</b></figcaption></figure>
+        <figure class="hero-video" aria-label="管道清洁作业流程二维示意"><video autoplay muted loop playsinline preload="metadata" aria-label="投放、识别、贴合、清洁、回收、冲排的二维作业流程动画"><source src="assets/lanjing-x1-process-v2.mp4" type="video/mp4">当前浏览器不支持播放该动画视频。</video><figcaption><span>作业流程</span><b>投放 → 识别 → 贴合 → 清洁 → 回收 → 冲排</b></figcaption></figure>
       </div>
     </header>
     <section id="process" class="process-section">
-      <div class="section-head"><div><p class="eyebrow">作业流程</p><h2>投放到冲洗的作业链</h2></div><p>二维工艺示意，不作为实拍或市政作业验证。</p></div>
-      <figure class="animation"><video autoplay muted loop playsinline preload="metadata" aria-label="投放、识别、贴合、清洁、回收、冲洗的二维流程动画"><source src="assets/lanjing-x1-process-v2.mp4" type="video/mp4">当前浏览器不支持播放该动画视频。</video><figcaption>先回收机器人，再开启阀门冲洗。机器人负责扰动并破坏沉积层附着状态，水流完成后续冲排。</figcaption></figure>
-      <ol class="steps"><li><b>01</b><span>投放</span></li><li><b>02</b><span>识别</span></li><li><b>03</b><span>贴合</span></li><li><b>04</b><span>清洁</span></li><li><b>05</b><span>回收</span></li><li><b>06</b><span>冲洗</span></li></ol>
+      <div class="section-head"><div><p class="eyebrow">作业流程</p><h2>投放到冲排的作业链</h2></div><p>二维工艺示意，不作为实拍或市政作业验证。</p></div>
+      <ol class="steps"><li><b>01</b><span>投放</span></li><li><b>02</b><span>识别</span></li><li><b>03</b><span>贴合</span></li><li><b>04</b><span>清洁</span></li><li><b>05</b><span>回收</span></li><li><b>06</b><span>冲排</span></li></ol>
     </section>
     <section class="local-path" aria-label="本地控制路径说明">
       <div><p class="eyebrow">接入边界</p><h2>公开浏览与现场控制，使用两个独立入口</h2><p>二维码只进入项目展示与只读台。真正控制机器人时，操作员应连接树莓派热点或同一局域网，再打开树莓派本地控制页。</p></div>
-      <ol><li><b>01</b><span>连接现场网络<small>手机或电脑连接树莓派热点／同一局域网</small></span></li><li><b>02</b><span>打开本地控制页<small>访问树莓派现场地址，不使用公开链接</small></span></li><li><b>03</b><span>登录并取得控制权<small>口令认证后，仅一个操作端持有租约</small></span></li><li><b>04</b><span>选择动作组或 STOP<small>仅 M0/M1/M2/M3/STOP；安全由 STM32 裁决</small></span></li></ol>
+      <ol><li><b>01</b><span>连接现场网络<small>手机或电脑连接树莓派热点／同一局域网</small></span></li><li><b>02</b><span>打开本地控制页<small>访问树莓派现场地址，不使用公开链接</small></span></li><li><b>03</b><span>登录并取得控制权<small>口令认证后，仅一个操作端持有租约</small></span></li><li><b>04</b><span>选择方向、模式或 STOP<small>只允许预设白名单；安全由 STM32 裁决</small></span></li></ol>
       <button class="local-path-link" data-open-integration>在只读台查看接机清单 →</button>
     </section>
     <details class="boundary"><summary><span><b>工程验证与现场评估说明</b><small>查看当前验证基础与后续现场评估项</small></span><i class="boundary-action" aria-hidden="true"><em class="expand-label">点击展开</em><em class="collapse-label">点击收起</em><strong class="arrow">↓</strong></i></summary><div class="boundary-grid"><article><p class="eyebrow">CURRENT BASIS</p><h2>当前项目基础</h2><ul><li>450 mm 样管已有机器人通行与演示记录。</li><li>现有链路支持云端辅助建议与人工动作组接管。</li><li>二维覆盖分析与流程动画用于竞赛表达。</li></ul></article><article><p class="eyebrow">NEXT GATE</p><h2>现场评估要点</h2><ul><li>阀门隔离、残余压力、排水与应急回收条件。</li><li>水密、漏水、低压、过流、卡滞的实测记录。</li><li>真实摄像头、串口回读和市政准入条件。</li></ul></article></div></details>
