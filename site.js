@@ -19,21 +19,5 @@ document.querySelector('[data-open-showcase]')?.addEventListener('click', () => 
 const consoleFrame = document.getElementById('consoleFrame');
 document.querySelectorAll('[data-open-integration]').forEach(button => button.addEventListener('click', () => {
   changeMode('console');
-  consoleFrame.src = 'console/?view=integration';
+  consoleFrame.src = 'console/';
 }));
-document.querySelectorAll('[data-console-view]').forEach(button => {
-  button.addEventListener('click', () => {
-    consoleFrame.src = `console/?view=${encodeURIComponent(button.dataset.consoleView)}`;
-  });
-});
-document.querySelector('[data-console-top]').addEventListener('click', () => {
-  consoleFrame.src = 'console/?view=mission';
-});
-
-const consoleNav = document.querySelector('.console-float-nav');
-const consoleNavToggle = document.querySelector('[data-console-nav-toggle]');
-consoleNavToggle?.addEventListener('click', () => {
-  const collapsed = consoleNav.classList.toggle('collapsed');
-  consoleNavToggle.setAttribute('aria-expanded', String(!collapsed));
-  consoleNavToggle.setAttribute('title', collapsed ? '展开目录' : '收起目录');
-});

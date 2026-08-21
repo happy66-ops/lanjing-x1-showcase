@@ -1,31 +1,71 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>管道作业平台 | 只读作业台</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="integration.css"><link rel="stylesheet" href="tone.css"></head>
-<body><main>
-  <nav><a class="brand" href="../">管道 <strong>作业平台</strong></a><span>清洁装备公开演示</span><div class="tabs"><button class="tab active" data-view="mission">任务演示</button><button class="tab" data-view="boundary">工况校核</button><button class="tab" data-view="integration">接入准备</button></div></nav>
-  <section id="mission" class="view active">
-    <header><div><p class="eyebrow">公开参考</p><h1>管内清洁作业台</h1><p>完整展示动作组、维护编号与工程边界。公开页只读，不连接硬件，不记录操作。</p></div><div class="read-only">公开只读<br><b>不可控制</b></div></header>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="state-endpoint" content="">
+  <title>只读作业台 | 管道作业平台</title>
+  <link rel="stylesheet" href="styles.css?v=readonly-r1">
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">READ-ONLY WORKBENCH</p>
+        <h1>管道作业台 <span>状态镜像</span></h1>
+        <p class="intro">这里展示现场本地工作台的操作结构与已确认状态。公开页面只读，不登录、不取权、不发送任何设备指令。</p>
+      </div>
+      <div class="read-only-badge"><span class="status-dot"></span><b>公开只读</b><small id="stateSource">公开演示状态</small></div>
+    </header>
+
+    <section class="status-band" aria-label="只读状态摘要">
+      <div><span>运行状态</span><b id="publicRunState">演示待机</b></div>
+      <div><span>最近动作组</span><b id="publicMode">STOP</b></div>
+      <div><span>安全状态</span><b id="publicSafety">只读展示，安全由 STM32 裁决</b></div>
+      <div><span>同步连接</span><b id="publicConnection">未连接现场状态</b></div>
+    </section>
+
+    <section class="workflow" aria-label="作业流程">
+      <div class="section-heading"><div><p class="eyebrow">OPERATION ROUTE</p><h2>从投放到冲排</h2></div><p>流程动画保留在“项目展示”页；这里同步显示工作台对应的安全路径。</p></div>
+      <ol>
+        <li class="active"><b>01</b><span>连接后端<small>读取现场状态</small></span></li>
+        <li><b>02</b><span>获取控制权<small>公开页不执行此操作</small></span></li>
+        <li><b>03</b><span>确认安全状态<small>等待 STM32 回读</small></span></li>
+        <li><b>04</b><span>选择并启动<small>方向与 M0-M3</small></span></li>
+        <li><b>05</b><span>安全停止<small>STOP 保持优先级</small></span></li>
+      </ol>
+    </section>
+
     <section class="dashboard">
-      <article class="camera card"><div class="card-head"><div><span>01 / 管内视窗</span><h2>作业画面</h2></div><i class="signal">● 模拟信号</i></div><div class="pipe"><div class="waterline"></div><div class="sediment"></div><div class="robot"><b>管网作业单元</b><small>前膨胀 · 后履带</small></div><div class="scan"></div></div><div class="camera-foot"><span id="cameraStatus">等待作业指令</span><span>400–500 mm 目标范围</span></div></article>
-      <aside class="control card"><div class="card-head"><div><span>02 / 控制模式</span><h2 id="scenarioTitle">在线辅助识别</h2></div><i class="mode-dot"></i></div><p id="scenarioDesc">云端分析提供动作组建议，操作员确认后调用预设组。</p><div class="segmented"><button data-scenario="online" class="selected">在线</button><button data-scenario="offline">断网接管</button><button data-scenario="stop">安全停机</button></div><div class="status-list"><div><span>云端状态</span><b id="cloudState">辅助建议可用</b></div><div><span>执行路径</span><b id="pathState">树莓派 → UART → STM32</b></div><div><span>安全裁决</span><b>STM32</b></div></div></aside>
+      <article class="card camera-card">
+        <div class="card-heading"><div><p class="eyebrow">USB CAMERA</p><h2>管内画面</h2></div><span class="badge" id="publicCameraBadge">只读画面</span></div>
+        <div class="camera-view" aria-label="公开只读摄像头状态">
+          <div class="pipe-viewport"><span class="scan-line"></span><div class="pipe-ring"></div><div class="pipe-water"></div><div class="pipe-sediment"></div><div class="robot-mark"><b>作业单元</b><small>管内清洁装备</small></div></div>
+          <div class="camera-placeholder"><strong id="publicCamera">摄像头状态待现场同步</strong><small>公开页不直接打开或控制摄像头设备</small></div>
+        </div>
+        <div class="camera-meta"><span>画面来源：<b id="publicCameraSource">状态镜像 / 演示画面</b></span><span>目标管径：<b>400-500 mm</b></span></div>
+      </article>
+
+      <article class="card control-card">
+        <div class="card-heading"><div><p class="eyebrow">MISSION CONTROL</p><h2>任务控制</h2></div><span class="badge neutral">不可控制</span></div>
+        <div class="read-only-note"><b>只读镜像</b><span>按钮用于对应本地工作台的视觉位置，已禁用，不会产生动作。</span></div>
+        <div class="timing-grid" aria-label="运行计时"><div><span>控制接入</span><b id="publicAccessTimer">00:00</b></div><div><span>累计运行</span><b id="publicTotalTimer">00:00</b></div><div class="accent"><span>当前动作</span><b id="publicSegmentTimer">00:00</b><small id="publicSegmentLabel">尚未启动</small></div></div>
+        <div class="control-row"><span>方向</span><div class="segmented"><button type="button" disabled id="publicForward">前进</button><button type="button" disabled id="publicReverse">后退</button></div></div>
+        <div class="control-row mode-row"><span>模式</span><div class="mode-grid"><button type="button" disabled data-public-mode="M0"><b>M0</b><small>正常行进</small></button><button type="button" disabled data-public-mode="M1"><b>M1</b><small>颗粒物 / 铁锈 / 泥沙</small></button><button type="button" disabled data-public-mode="M2"><b>M2</b><small>生物膜</small></button><button type="button" disabled data-public-mode="M3"><b>M3</b><small>无机结垢</small></button></div></div>
+        <div class="prepared"><span>当前显示</span><b id="publicPreparedCommand">前进 · M0</b><small>公开页不展示 PWM、动作帧或控制口令</small></div>
+        <div class="action-row"><button type="button" disabled class="start"><b>启动</b><span>只读预览</span></button><button type="button" disabled class="stop"><b>STOP</b><span>安全停止</span></button><button type="button" disabled class="reset"><b>复位</b><span>初始姿态</span></button></div>
+        <div class="readonly-timer"><div><span>全局限时</span><b id="publicTimerState">未启用</b></div><strong id="publicCountdown">--:--</strong><small>本地工作台可设置，公开页仅显示</small></div>
+      </article>
     </section>
-    <section class="card process"><div class="card-head"><div><span>03 / 作业流程</span><h2>投放至冲排的六步演示</h2></div><b id="stepName">待开始</b></div><div class="steps"><button data-step="0"><em>01</em><span>投放</span></button><button data-step="1"><em>02</em><span>视觉检测</span></button><button data-step="2"><em>03</em><span>贴合</span></button><button data-step="3"><em>04</em><span>清洁</span></button><button data-step="4"><em>05</em><span>回收</span></button><button data-step="5"><em>06</em><span>冲排</span></button></div><p id="stepDesc">点击任一步查看对应作业阶段。机器人回收后，再恢复通水并完成冲排。</p></section>
-    <section class="bottom-grid"><article class="card actions"><div class="card-head"><div><span>04 / 任务控制</span><h2>方向、模式与运行状态</h2></div><b class="readonly-badge">只读预览</b></div><div class="readonly-timing"><div><span>控制接入</span><b>08:42</b></div><div><span>累计运行</span><b>06:18</b></div><div><span>当前动作</span><b>01:26</b><small>前进 · M2</small></div></div><div class="readonly-direction"><span>方向</span><div class="segmented"><button data-direction="forward" class="selected">前进</button><button data-direction="reverse">后退</button></div></div><div class="action-grid"><button data-mode="M0"><b>M0</b><span>巡检通行</span><small>正常行进</small></button><button data-mode="M1"><b>M1</b><span>轻污</span><small>低速清洁</small></button><button data-mode="M2" class="selected"><b>M2</b><span>中污</span><small>标准清洁</small></button><button data-mode="M3"><b>M3</b><span>重污</span><small>强化清洁</small></button><button data-mode="STOP" class="stop"><b>STOP</b><span>立即停止</span><small>保持控制权</small></button></div><div class="readonly-limit"><span>全局限时</span><input type="range" min="0" max="10" value="5" aria-label="只读限时滑块"><label>或输入 <input type="number" value="15" min="1" max="60" aria-label="只读定时分钟"> 分钟</label><b>剩余 --:--</b></div><p id="actionNote">公开只读参考：界面与现场控制台对应，但不会发送任何硬件命令。</p></article>
-      <article class="card readiness"><span>05 / 现场演练要点</span><h2>断网时，画面仍可见<br>动作仍可人工选择</h2><ol><li>操作员查看 USB 摄像头画面</li><li>选择 M0/M1/M2/M3 或 STOP</li><li>STM32 保留安全保护与最终裁决</li></ol></article></section>
-    <section class="card mode-table"><div class="card-head"><div><span>06 / 控制边界</span><h2>公开页只展示模式作用</h2></div><b>不公开动作帧</b></div><div class="public-mode-summary"><div><b>M0</b><span>通行与基础作业</span></div><div><b>M1</b><span>颗粒物、铁锈与泥沙</span></div><div><b>M2</b><span>生物膜清洁</span></div><div><b>M3</b><span>无机结垢清洁</span></div><div class="stop"><b>STOP</b><span>安全停止</span></div></div><p class="hint">前进与后退均由树莓派白名单动作组完成；具体 PWM、串口帧、认证和控制接口仅保留在现场本地控制台。</p></section>
-    <section class="maintenance"><div class="maintenance-title"><div><span>07 / 维护与单机调试</span><h2>单个执行器的演练控制</h2><p>下方保留编号、档位、单机启动、停止与复位；当前只演练，不发 UART 指令。</p></div><button id="openMaintenance" class="maintenance-open">打开维护面板 ↓</button></div><div id="maintenancePanel" class="maintenance-panel" hidden><div class="maintenance-alert"><b>维护边界</b><span>真实单机控制需 STM32 维护协议、急停和安全回读确认后接入。</span></div><div id="actuatorGrid" class="actuator-grid"></div></div></section>
-  </section>
-  <section id="boundary" class="view"><header><div><p class="eyebrow">ENGINEERING GATE / 工况校核</p><h1>从竞赛演示到现场评估</h1><p>核对项服务于封闭模拟验证和试点评估准备，不代表已取得市政准入或饮用水合规。</p></div></header><section class="gate-grid"><article class="card gate-card"><span>当前基础</span><h2>已具备</h2><ul><li>400–500 mm 目标管径；450 mm 样管已有演示</li><li>树莓派 / OpenClaw / UART / STM32 预设动作链路</li><li>云端不可用时人工接管的演练逻辑</li></ul></article><article class="card gate-card pending"><span>现场前核实</span><h2>必须确认</h2><ul><li>阀门隔离、残余压力与停水条件</li><li>排水去向、检修口、牵引通信与应急回收</li><li>水密、漏水、低压、过流、卡滞的实测记录</li></ul></article></section><section class="card checklist"><div class="card-head"><div><span>现场校核表</span><h2>逐项确认后再进入评估</h2></div><b id="gateState">封闭模拟验证准备</b></div><div class="checks"><label><input type="checkbox"> 阀门隔离与残余压力已确认</label><label><input type="checkbox"> 排水与“回收后冲排”流程已确认</label><label><input type="checkbox"> 牵引通信、检修口与应急回收路径已确认</label><label><input type="checkbox"> 安全保护已按方案完成实测记录</label></div></section></section>
-  <section id="integration" class="view"><header><div><p class="eyebrow">INTEGRATION GATE / 到货即接入</p><h1>现场接入准备</h1><p>把未知参数留在唯一入口。实体到手后只补真实串口帧、设备节点和回读字段，不重做页面。</p></div><div class="read-only">当前模式<br><b>DRY-RUN</b></div></header>
-    <section class="gate-grid"><article class="card integration-card"><span>01 / 控制网关</span><h2>预设动作专用入口</h2><p>浏览器只选择 M0/M1/M2/M3/STOP；后端未来统一转换为 STM32 串口帧。当前仅记录演练命令，不模拟 ACK。</p><div class="gateway-row"><b id="gatewayState">网关：模拟记录</b><button id="dryRunCommand">演练发送 STOP</button></div></article><article class="card integration-card"><span>02 / 控制权</span><h2 id="safetyState">IDLE · 等待接入</h2><p>安全优先级：STOP ＞ 现场人工 ＞ OpenClaw 建议。云端断开时保留人工接管，通信异常不自动继续动作。</p><div class="state-row"><span>当前来源</span><b id="controlSource">未选择</b></div></article></section>
-    <section class="card checklist"><div class="card-head"><div><span>03 / 一键自检清单</span><h2>到树莓派后按顺序执行</h2></div><div class="button-row"><button id="runSelfCheck" class="maintenance-open">运行模拟自检</button><a class="script-link" href="scripts/lanjing_x1_preflight.sh" download>下载树莓派脚本</a></div></div><div class="checks integration-checks"><label><input type="checkbox" data-selfcheck="uart"> UART 节点：待现场识别</label><label><input type="checkbox" data-selfcheck="camera"> USB 摄像头：待现场识别</label><label><input type="checkbox" data-selfcheck="config"> 配置文件：已预留</label><label><input type="checkbox" data-selfcheck="service"> 网关服务：已预留</label></div><p id="selfCheckResult" class="hint">未运行。自检结果不能替代硬件联调。</p></section>
-    <section class="card event-log"><div class="card-head"><div><span>04 / 事件记录</span><h2>未来现场证据入口</h2></div><button id="clearEventLog" class="minor-button">清空演练记录</button></div><div id="eventLog" class="log-list"><p>暂无记录。现场接入后可扩展 TX/RX、回读状态和视频时间戳。</p></div></section>
-    <section class="integration-grid">
-      <article class="card video-adapter"><div class="card-head"><div><span>05 / 视频接入</span><h2>真实画面可插拔入口</h2></div><b id="videoState">未接入</b></div><div id="videoFrame" class="video-frame"><div><strong>等待真实视频源</strong><span>支持现场填入 HTTP/HTTPS MJPEG 图像流地址</span></div></div><label class="field-label">视频流地址<input id="streamUrl" type="url" placeholder="例如：http://树莓派地址:端口/stream"></label><div class="button-row"><button id="applyStream">应用视频源</button><button id="disconnectStream" class="minor-button">断开</button></div><p class="hint">当前不接入 RTSP；树莓派现场可将 USB 摄像头转换为 MJPEG 后填入。未接通前不显示为在线画面。</p></article>
-      <article class="card performance-panel"><div class="card-head"><div><span>06 / 性能与链路</span><h2>只展示可确认状态</h2></div><b>实时参数待接入</b></div><div class="metric-list"><div><span>控制链路</span><b class="ok">已验证：OpenClaw → Pi → UART → STM32</b></div><div><span>云端不可用</span><b class="ok">已具备：人工选择动作组</b></div><div><span>视频画面</span><b id="metricVideo" class="pending">待接入</b></div><div><span>串口 ACK / 状态回读</span><b class="pending">待实机确认</b></div><div><span>RPM / 左右方向</span><b class="pending">待实机低速联调</b></div><div><span>漏水、电压、电流</span><b class="pending">待传感器与协议回读</b></div></div></article>
+
+    <section class="status-grid">
+      <article class="card status-card"><div class="card-heading"><div><p class="eyebrow">LINK STATUS</p><h2>控制链路</h2></div><span class="badge neutral">只读</span></div><dl><div><dt>树莓派服务</dt><dd id="publicService">公开页未连接</dd></div><div><dt>UART / STM32</dt><dd id="publicLink">状态待同步</dd></div><div><dt>STM32 最后反馈</dt><dd id="publicFeedback">本次未收到</dd></div><div><dt>最近记录</dt><dd id="publicEvent">公开演示状态</dd></div></dl></article>
+      <article class="card status-card"><div class="card-heading"><div><p class="eyebrow">ACTUATOR VIEW</p><h2>执行器映射</h2></div><span class="badge neutral">不含动作帧</span></div><div class="actuator-list"><div><b>000</b><span>数字舵机</span><small>整体摆动</small></div><div><b>001</b><span>前置滚刷电机</span><small>自转执行器</small></div><div><b>004 / 005</b><span>摆动舵机</span><small>总线设备</small></div><div><b>006 / 007</b><span>履带电机</span><small>方向随模式切换</small></div></div><p class="status-foot">公开页只说明设备角色，不公开串口帧、PWM 值和维护参数。</p></article>
     </section>
-    <section class="card config-panel"><div class="card-head"><div><span>07 / 现场参数入口</span><h2>配置保存于本浏览器</h2></div><button id="saveConfig" class="maintenance-open">保存演练配置</button></div><div class="config-grid"><label>UART 节点<input id="cfgUart" placeholder="待现场识别"></label><label>串口参数<input id="cfgSerial" placeholder="待现场确认"></label><label>摄像头设备<input id="cfgCamera" placeholder="待现场识别"></label><label>动作组帧<input id="cfgFrames" placeholder="待 STM32 源码确认"></label></div><p id="configResult" class="hint">此处只保存待确认信息，不会向设备写入配置或发送控制命令。</p></section>
-    <section class="card export-panel"><div class="card-head"><div><span>08 / 证据导出</span><h2>导出本次网页演练记录</h2></div><div class="button-row"><button id="exportCsv" class="minor-button">导出 CSV</button><button id="exportJson" class="minor-button">导出 JSON</button></div></div><p class="hint">导出内容是浏览器演练操作记录，不能替代清洁实验、密封实验或市政作业数据。</p></section>
-  </section>
-  <footer>公开只读台：不含设备控制、串口参数、动作帧或远程授权。实际控制仅在树莓派本地网络完成，STM32 负责超时、漏水、低压、过流与急停的最终安全权。</footer>
-</main><script src="app.js?v=nav1"></script><script src="integration.js?v=nav1"></script><script src="readonly.js?v=nav1"></script></body></html>
+
+    <section class="public-boundary"><b>公开边界</b><span>二维码入口保持不变；此页面只展示项目和现场工作台状态，不提供设备控制、登录、远程授权或任意串口透传。</span></section>
+  </main>
+  <script src="app.js?v=readonly-r1"></script>
+</body>
+</html>
